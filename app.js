@@ -6,7 +6,7 @@ import http from "http";
 import indexRouter from "./routes/weather";
 import usersRouter from "./routes/favorites";
 
-const port = 8080;
+import config from "./config"
 
 const main = () =>
     configureServer(
@@ -19,19 +19,19 @@ const configureApp = () =>
         .use(express.json())
         .use(express.urlencoded({extended: false}))
         .use(cors())
-        .set('port', port)
+        .set('port', config.server.port)
         .use('/weather', indexRouter())
         .use('/favorites', usersRouter());
 
 const configureServer = (app) =>
     http.createServer(app)
-        .listen(port)
+        .listen(config.server.port)
         .on('error', (error) => {
             throw error
         })
         .on(
             'listening',
-            () => console.log('Server is listening on port ' + port)
+            () => console.log('Server is listening on port ' + config.server.port)
         );
 
 main();
