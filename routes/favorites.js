@@ -1,5 +1,6 @@
 import express from "express";
 import * as repo from "../favoritesRepo"
+import {weatherApiByCity} from "../externalApi";
 
 export default () =>
     express.Router()
@@ -12,6 +13,15 @@ export default () =>
             }
         )
         .post('/', async (req, res) => {
+            if (!req.body.name) {
+                res.json({error: "name is undefined"});
+                return;
+            }
+            const result = await weatherApiByCity(req.body.name);
+            if (result && result.status === "fail") {
+                res.status(result.response.cod).json({error: result.response});
+                return;
+            }
                 try {
                     await repo.addCity(req.body.name);
                     res.json({result: "OK"});
@@ -21,6 +31,10 @@ export default () =>
             }
         )
         .delete('/', async (req, res) => {
+            if (!req.body.name) {
+                res.json({error: "name is undefined"});
+                return;
+            }
                 try {
                     await repo.deleteCity(req.body.name);
                     res.json({result: "OK"});
