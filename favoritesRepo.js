@@ -24,6 +24,9 @@ export const getCities = () => new Promise((resolve, reject) => {
 });
 
 export const addCity = (cityName) => new Promise((resolve, reject) => {
+    if (!cityName)
+        reject(new TypeError("cityName is undefined"));
+
     const c = connection();
     c.connect((err) => {
         if (err)
@@ -39,6 +42,9 @@ export const addCity = (cityName) => new Promise((resolve, reject) => {
 });
 
 export const deleteCity = (cityName) => new Promise((resolve, reject) => {
+    if (!cityName)
+        reject(new TypeError("cityName is undefined"));
+
     const c = connection();
     c.connect((err) => {
         if (err)

@@ -7,7 +7,7 @@ export default () =>
                 try {
                     res.json(await repo.getCities());
                 } catch (e) {
-                    res.status(400).json({error: e})
+                    res.status(400).json({error: e.message})
                 }
             }
         )
@@ -16,7 +16,7 @@ export default () =>
                     await repo.addCity(req.body.name);
                     res.json({result: "OK"});
                 } catch (e) {
-                    res.status(400).json({error: e})
+                    res.status(400).json({error: e.message})
                 }
             }
         )
@@ -25,7 +25,7 @@ export default () =>
                     await repo.deleteCity(req.body.name);
                     res.json({result: "OK"});
                 } catch (e) {
-                    res.status(400).json({error: e})
+                    res.status(400).json({error: e.message})
                 }
             }
         );
