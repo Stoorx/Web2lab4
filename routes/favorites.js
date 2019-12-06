@@ -14,7 +14,7 @@ export default () =>
         )
         .post('/', async (req, res) => {
             if (!req.body.name) {
-                res.json({error: "name is undefined"});
+                res.status(400).json({error: "name is undefined"});
                 return;
             }
             const result = await weatherApiByCity(req.body.name);
@@ -32,7 +32,7 @@ export default () =>
         )
         .delete('/', async (req, res) => {
             if (!req.body.name) {
-                res.json({error: "name is undefined"});
+                res.status(400).json({error: "name is undefined"});
                 return;
             }
                 try {
